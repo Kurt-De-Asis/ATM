@@ -1,4 +1,4 @@
-print("Welcome to Bankskrrrt.Ph")
+print("Welcome to Banku.Ph")
 print("What would you like to do?")
 while True:
     balance = 525426
@@ -8,19 +8,19 @@ while True:
         print("Your remaining balance is: $" + str(balance))
         choice1 = input("Would you like to do another transaction? (Y/N): ")
         if choice1.upper() == 'Y':
-            print("Welcome to Bankskrrrt.Ph")
+            print("Welcome to Banku.Ph")
             print("What would you like to do?")
         else:
-            print("Thank you for using Bankskrrrt.Ph!")
+            print("Thank you for using Banku.Ph!")
             exit()
     elif choose == '2':
         print("Your savings amount is: $" + str(savings))
         choice1 = input("Would you like to do another transaction? (Y/N): ")
         if choice1.upper() == 'Y':
-            print("Welcome to Bankskrrrt.Ph")
+            print("Welcome to Banku.Ph")
             print("What would you like to do?")
         else:
-            print("Thank you for using Bankskrrrt.Ph!")
+            print("Thank you for using Banku.Ph!")
             exit()
     elif choose == '3':
         withdraw = int(input("How much would you like to withdraw?: $"))
@@ -33,17 +33,17 @@ while True:
                 print("You succesfully withdraw $"+str(withdraw))
             choice1 = input("Would you like to do another transaction? (Y/N): ")
             if choice1.upper() == 'Y':
-                print("Welcome to Bankskrrrt.Ph")
+                print("Welcome to Banku.Ph")
                 print("What would you like to do?")
             else:
-                print("Thank you for using Bankskrrrt.Ph!")
+                print("Thank you for using Banku.Ph!")
                 exit()
     elif choose == '4':
         deposit = int(input("How much would you like to deposit?: $"))
         add_balance = deposit + balance
         print("Success! Your remaining balance is $" + str(add_balance))
     elif choose == '5':
-        print("Thank you for using Bankskrrrt.Ph!")
+        print("Thank you for using Banku.Ph!")
         exit()
     elif choose.isalpha():
         print("Invalid. Please enter the right number")
