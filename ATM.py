@@ -1,51 +1,60 @@
-print("Welcome to Banku.Ph")
-print("What would you like to do?")
-while True:
-    balance = 525426
-    savings = 200_000
-    choose = (input("1. Check Balance.\n2. Check Savings.\n3. Withdraw.\n4. Deposit.\n5. Exit.\ninput:"))
-    if choose == '1':
-        print("Your remaining balance is: $" + str(balance))
-        choice1 = input("Would you like to do another transaction? (Y/N): ")
-        if choice1.upper() == 'Y':
-            print("Welcome to Banku.Ph")
-            print("What would you like to do?")
-        else:
-            print("Thank you for using Banku.Ph!")
-            exit()
-    elif choose == '2':
-        print("Your savings amount is: $" + str(savings))
-        choice1 = input("Would you like to do another transaction? (Y/N): ")
-        if choice1.upper() == 'Y':
-            print("Welcome to Banku.Ph")
-            print("What would you like to do?")
-        else:
-            print("Thank you for using Banku.Ph!")
-            exit()
-    elif choose == '3':
-        withdraw = int(input("How much would you like to withdraw?: $"))
-        if withdraw > balance:
-            print("Not enough balance")
-        else:
-            remain = balance - withdraw
-            choice = input("Your remaining balance after this withdrawal will be $" + str(remain) + " Confirm? (Y/N): ")
-            if choice.upper() == 'Y':
-                print("You succesfully withdraw $"+str(withdraw))
-            choice1 = input("Would you like to do another transaction? (Y/N): ")
-            if choice1.upper() == 'Y':
-                print("Welcome to Banku.Ph")
-                print("What would you like to do?")
+import openpyxl
+from time import sleep
+from openpyxl import Workbook, load_workbook
+
+def countDown():
+    for i in range(3, 0, -1):
+        print(i)
+        sleep(1)
+
+def main():
+    bank = load_workbook('bankAccounts.xlsx')
+    sheet = bank.active
+
+    while True:
+        print("Welcome to Online Banking\n"
+              "*************************\n"
+              "1. Check Balance\n"
+              "2. Withdraw\n"
+              "3. Deposit\n"
+              "4. Exit\n"
+              "*************************")
+        try:
+            choice = int(input("What would you like to do?: "))
+        except ValueError:
+            print("Invalid input. Please enter a number from the list of choices.")
+            continue
+
+        if choice == 1:
+            print("Your balance is: $" + str(sheet['E2'].value))
+            if input("Would you like to do another transaction? ( y / n) : ").lower() == 'n':
+                break
+        elif choice == 2:
+            withdraw = int(input("How much would you like to withdraw?: $"))
+            if withdraw > sheet['E2'].value:
+                print("Insufficient funds.")
             else:
-                print("Thank you for using Banku.Ph!")
-                exit()
-    elif choose == '4':
-        deposit = int(input("How much would you like to deposit?: $"))
-        add_balance = deposit + balance
-        print("Success! Your remaining balance is $" + str(add_balance))
-    elif choose == '5':
-        print("Thank you for using Banku.Ph!")
-        exit()
-    elif choose.isalpha():
-        print("Invalid. Please enter the right number")
-    else:
-        print("Invalid choice.")
+                sheet['E2'].value -= withdraw
+                print("Thank you for using the ATM! Withdrawing your cash now...")
+                countDown()
+                print(f"Withdrawal Successful! Your new balance is ${sheet['E2'].value}")
+                if input("Would you like to do another transaction? ( y / n) : ").lower() == 'n':
+                    break
+        elif choice == 3:
+            deposit = int(input("How much would you like to deposit?: $"))
+            sheet['E2'].value += deposit
+            print("Thank you for using the ATM! Depositing your cash now...")
+            countDown()
+            print(f"Your cash was deposited successfully! Your new balance is ${sheet['E2'].value}")
+            if input("Would you like to do another transaction? ( y / n) : ").lower() == 'n':
+                break
+        elif choice == 4:
+            print("Thank you for using my program, have a great day!")
+            break
+        else:
+            print("Please choose in the list of choices!")
+
+    bank.save('bankAccounts.xlsx')
+
+if __name__ == "__main__":
+    main()
